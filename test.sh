@@ -12,4 +12,4 @@ done >> changelog.txt
 
 
 
-# echo $(date -u +"%Y-%m-%dT%H:%M:%SZ")
+echo $(date -u +"%Y-%m-%dT%H:%M:%SZ")
