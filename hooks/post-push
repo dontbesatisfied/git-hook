@@ -1,0 +1,5 @@
+#!/bin/sh
+
+BRANCH="$(git rev-parse --symbolic --abbrev-ref $(git symbolic-ref HEAD))"
+
+echo $BRANCH
