@@ -11,4 +11,4 @@ chmod +x .git/hooks/prepare-commit-msg
 chmod +x .git/hooks/pre-push
 
 echo "Success to inject prepare-commit-msg in git hooks"
-echo "Success to inject pre-push in git hooks "
+echo "Success to inject pre-push in git hooks"
