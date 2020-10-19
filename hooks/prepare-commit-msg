@@ -1,0 +1,130 @@
+#!/bin/sh
+
+# function to draw table
+function printTable()
+{
+    local -r delimiter="${1}"
+    local -r data="$(removeEmptyLines "${2}")"
+
+    if [[ "${delimiter}" != '' && "$(isEmptyString "${data}")" = 'false' ]]
+    then
+        local -r numberOfLines="$(wc -l <<< "${data}")"
+
+        if [[ "${numberOfLines}" -gt '0' ]]
+        then
+            local table=''
+            local i=1
+
+            for ((i = 1; i <= "${numberOfLines}"; i = i + 1))
+            do
+                local line=''
+                line="$(sed "${i}q;d" <<< "${data}")"
+
+                local numberOfColumns='0'
+                numberOfColumns="$(awk -F "${delimiter}" '{print NF}' <<< "${line}")"
+
+                # Add Line Delimiter
+
+                if [[ "${i}" -eq '1' ]]
+                then
+                    table="${table}$(printf '%s#+' "$(repeatString '#+' "${numberOfColumns}")")"
+                fi
+
+                # Add Header Or Body
+
+                table="${table}\n"
+
+                local j=1
+
+                for ((j = 1; j <= "${numberOfColumns}"; j = j + 1))
+                do
+                    table="${table}$(printf '#| %s' "$(cut -d "${delimiter}" -f "${j}" <<< "${line}")")"
+                done
+
+                table="${table}#|\n"
+
+                # Add Line Delimiter
+
+                if [[ "${i}" -eq '1' ]] || [[ "${numberOfLines}" -gt '1' && "${i}" -eq "${numberOfLines}" ]]
+                then
+                    table="${table}$(printf '%s#+' "$(repeatString '#+' "${numberOfColumns}")")"
+                fi
+            done
+
+            if [[ "$(isEmptyString "${table}")" = 'false' ]]
+            then
+                echo  "${table}" | column -s '#' -t | awk '/^\+/{gsub(" ", "-", $0)}1'
+            fi
+        fi
+    fi
+}
+
+function removeEmptyLines()
+{
+    local -r content="${1}"
+
+    echo  "${content}" | sed '/^\s*$/d'
+}
+
+function repeatString()
+{
+    local -r string="${1}"
+    local -r numberToRepeat="${2}"
+
+    if [[ "${string}" != '' && "${numberToRepeat}" =~ ^[1-9][0-9]*$ ]]
+    then
+        local -r result="$(printf "%${numberToRepeat}s")"
+        echo  "${result// /${string}}"
+    fi
+}
+
+function isEmptyString()
+{
+    local -r string="${1}"
+
+    if [[ "$(trimString "${string}")" = '' ]]
+    then
+        echo 'true' && return 0
+    fi
+
+    echo 'false' && return 1
+}
+
+function trimString()
+{
+    local -r string="${1}"
+
+    sed 's,^[[:blank:]]*,,' <<< "${string}" | sed 's,[[:blank:]]*$,,'
+}
+
+
+echo "---- Start CommitLint ----"
+
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+SHA1=$3
+
+COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
+echo $COMMIT_MSG
+
+PATTERN='^(fix|feat|BREAKING CHANGE|refactor|docs|test|chore):'
+
+if [[ $COMMIT_MSG =~ $PATTERN ]];
+then 
+  echo 'true'
+  exit 0
+else 
+  echo '[ERROR] Incorrectly formatted commit message'
+  printTable  ',' "Type, SemVer, Description
+  fix, PATCH, 하위 호환성 지키는 범위 내에서 버그가 수정된 것
+  feat, MINOR, 하위 호환성 지키면서 API 기능이 추가된 것
+  BREAKING CHANGE, MAJOR, API 호환성이 깨질만한 변경사항
+  refactor, , 내부적인 리팩토링
+  docs, , 문서작성
+  test, , 테스트코드 작성
+  chore, , 그외 자잘한 수정 사항들"
+  
+  exit 1
+fi
+
+
