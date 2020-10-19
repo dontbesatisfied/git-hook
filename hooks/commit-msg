@@ -1,3 +1,11 @@
 #!/bin/sh
 
-echo "$1"
+COMMIT_MSG_FILE=$1
+COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
+
+
+if [[ $COMMIT_MSG =~ '^BREAKING CHANGE:' ]];
+then
+  # make change log and tag
+  echo "GGGGGGGGG"
+fi
