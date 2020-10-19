@@ -12,7 +12,7 @@ then
     echo "$local_ref $local_sha $remote_ref $remote_sha"
     if [ "$remote_ref" == "$MASTER_REF" ]
     then
-        # echo "[ERROR] DO NOT PUSH DIRECTLY TO MASTER"
-        # exit 1
+        echo "[ERROR] DO NOT PUSH DIRECTLY TO MASTER"
+        exit 1
     fi
 fi
