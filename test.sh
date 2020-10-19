@@ -5,4 +5,5 @@ LATEST_TAG_TIME=$(echo $(git show -q v0.0.3 --pretty=format:%ai) | grep -Eo '\d{
 git log --pretty=format:"%H - %aI : %s" --after="($LATEST_TAG_TIME)" | while read line
 do
   echo "$line"
-done
+done >> changelog.txt
+

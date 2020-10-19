@@ -2,11 +2,6 @@
 
 MASTER_REF="refs/heads/master"
 
-git log --pretty=format:"%s" | while read line
-do
-  echo $line
-done
-
 if read local_ref local_sha remote_ref remote_sha
 then
     echo "$local_ref $local_sha $remote_ref $remote_sha"
