@@ -1,6 +1,7 @@
 # echo $(git log --pretty=format:"%s")
 
-# LATEST_TAG=$(git describe --tags --abbrev=0)
+LATEST_TAG=$(git describe --tags --abbrev=0)
+LATEST_TAG_TIME=$(git log -1 --format=%ai $LLATEST_TAG)
 # MAJOR=0
 # MINOR=0
 # PATCH=0
@@ -31,7 +32,10 @@
 
 
 
-git log --pretty=format:"%H - %aI : %s" | while read line
+git log --pretty=format:"%H - %aI : %s" --after="$LATEST_TAG_TIME" | while read line
 do
   echo "$line"
 done
+
+echo $(git log -1 --format=%ai $LLATEST_TAG)
+
