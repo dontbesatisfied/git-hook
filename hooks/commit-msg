@@ -10,12 +10,13 @@ MAJOR_PATTERN='^BREAKING CHANGE:'
 MINOR_PATTERN='^feat:'
 PATCH_PATTERN='^fix:'
 PATTERN='^(fix|feat|BREAKING CHANGE):'
+COMMIT_LOG_PATTERN='^(fix|feat|BREAKING CHANGE):'
 
 if [[ $COMMIT_MSG =~ $PATTERN ]];then
   # make change log and tag
   git log --pretty=format:"%H - %aI : %s" --after="($LATEST_TAG_TIME)" | while read line
   do
-    if [[ $line =~ $PATTERN ]]; then
+    if [[ $line =~ $COMMIT_LOG_PATTERN ]]; then
       echo "$line"
     fi
   done >> "$(date -u +"%Y-%m-%dT%H:%M:%SZ")_changelog.txt"
