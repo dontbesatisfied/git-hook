@@ -105,7 +105,6 @@ COMMIT_SOURCE=$2
 SHA1=$3
 
 COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
-echo $COMMIT_MSG
 
 PATTERN='^(fix|feat|BREAKING CHANGE|refactor|docs|test|chore):'
 
@@ -115,7 +114,6 @@ fi
 
 if [[ $COMMIT_MSG =~ $PATTERN ]];
 then 
-  echo 'true'
   exit 0
 else 
   echo '[ERROR] Incorrectly formatted commit message'
