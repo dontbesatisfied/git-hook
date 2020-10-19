@@ -8,4 +8,4 @@ ln -s $ROOT_DIR/hooks/prepare-commit-msg .git/hooks/prepare-commit-msg
 
 chmod +x .git/hooks/prepare-commit-msg
 
-echo "commitLint 적용 성공"
+echo "commitLint 적용 성공."
