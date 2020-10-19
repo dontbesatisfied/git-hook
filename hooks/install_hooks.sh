@@ -10,4 +10,5 @@ ln -s $ROOT_DIR/hooks/pre-push .git/hooks/pre-push
 chmod +x .git/hooks/prepare-commit-msg
 chmod +x .git/hooks/pre-push
 
-echo "commitLint 적용 성공"
+echo "Success to inject prepare-commit-msg in git hooks"
+echo "Success to inject pre-push in git hooks "
