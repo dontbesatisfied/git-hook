@@ -3,8 +3,9 @@
 COMMIT_MSG_FILE=$1
 COMMIT_MSG=$(cat $COMMIT_MSG_FILE)
 
+PATTERN='^BREAKING CHANGE:'
 
-if [[ $COMMIT_MSG =~ '^BREAKING CHANGE:' ]];
+if [[ $COMMIT_MSG =~ $PATTERN ]];
 then
   # make change log and tag
   echo "GGGGGGGGG"
