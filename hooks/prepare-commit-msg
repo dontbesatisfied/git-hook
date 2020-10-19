@@ -109,6 +109,10 @@ echo $COMMIT_MSG
 
 PATTERN='^(fix|feat|BREAKING CHANGE|refactor|docs|test|chore):'
 
+if [ "${COMMIT_SOURCE}" = merge ];then
+    exit 0
+fi
+
 if [[ $COMMIT_MSG =~ $PATTERN ]];
 then 
   echo 'true'
