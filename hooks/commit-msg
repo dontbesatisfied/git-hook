@@ -10,7 +10,7 @@ MAJOR_PATTERN='^BREAKING CHANGE:'
 MINOR_PATTERN='^feat:'
 PATCH_PATTERN='^fix:'
 PATTERN='^(fix|feat|BREAKING CHANGE):'
-COMMIT_LOG_PATTERN='^(fix|feat|BREAKING CHANGE):'
+COMMIT_LOG_PATTERN='(fix|feat|BREAKING CHANGE):'
 
 if [[ $COMMIT_MSG =~ $PATTERN ]];then
   # make change log and tag
