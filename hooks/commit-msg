@@ -15,7 +15,9 @@ if [[ $COMMIT_MSG =~ $PATTERN ]];then
   # make change log and tag
   git log --pretty=format:"%H - %aI : %s" --after="($LATEST_TAG_TIME)" | while read line
   do
-    echo "$line"
+    if [[ $line =~ $PATTERN ]]; then
+      echo "$line"
+    fi
   done >> "$(date -u +"%Y-%m-%dT%H:%M:%SZ")_changelog.txt"
   
 fi
