@@ -6,4 +6,4 @@
 # it wants to stop the commit.
 
 
-echo "test"
+echo "t"
