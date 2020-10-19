@@ -7,6 +7,6 @@ then
     if [ "$remote_ref" == "$FORBIDDEN_REF" ]
     then
         echo "[ERROR] DO NOT PUSH DIRECTLY TO MASTER"
-        exit 1
+        # exit 1
     fi
 fi
