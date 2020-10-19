@@ -8,4 +8,6 @@ if [[ $COMMIT_MSG =~ '^BREAKING CHANGE:' ]];
 then
   # make change log and tag
   echo "GGGGGGGGG"
+else
+  echo "FFFFFF"
 fi
